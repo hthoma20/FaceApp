@@ -10,6 +10,8 @@ import android.support.annotation.RequiresApi;
 import java.util.Random;
 
 /**
+ * Class Face
+ *
  * Face outlines a drawable face
  * includes three different hairstyles
  * includes method to draw the face on a given canvas
@@ -34,9 +36,14 @@ public class Face {
     public static final int TRIANGLE= 2;
 
 
-    /*
+
+
+    /**
      * Constuctor to initialize new face with random colors
      * at specified location
+     *
+     * @param x the x-coord of this face
+     * @param y the y-coord of this face
      */
     public Face(int x, int y){
         this.x= x;
@@ -67,7 +74,7 @@ public class Face {
     }
 
     /*
-     * draw this face on given canvas, centered at given x,y
+     * draw this face on given canvas
      */
     public void onDraw(Canvas c){
         drawSkin(c);
@@ -75,6 +82,11 @@ public class Face {
         drawEyes(c);
     }
 
+    /**
+     * draws the main part of the face
+     *
+     * @param c canvas on which to draw
+     */
     private void drawSkin(Canvas c) {
         Paint skinPaint= new Paint();
         skinPaint.setColor(skinColor);
@@ -82,6 +94,11 @@ public class Face {
         c.drawOval(x-100,y-135,x+100,y+135,skinPaint);
     }
 
+    /**
+     * draws the hair
+     *
+     * @param c canvas on which to draw
+     */
     private void drawHair(Canvas c){
         Paint hairPaint= new Paint();
         hairPaint.setColor(hairColor);
@@ -138,7 +155,11 @@ public class Face {
      Solution: used moveTo and LineTo methods as outlined in this tutorial
      */
 
-
+    /**
+     * draws the eyes
+     *
+     * @param c canvas on which to draw
+     */
     private void drawEyes(Canvas c){
         Paint eyePaint= new Paint();
         eyePaint.setColor(eyeColor);

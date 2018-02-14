@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Face App</string>
     <string name="hairStyle_oval">Oval</string>
     <string name="hairStyle_square">Square</string>
     <string name="hairStyle_triangle">Triangle</string>

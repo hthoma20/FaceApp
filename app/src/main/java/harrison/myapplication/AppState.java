@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
+ * Class AppState
+ *
  * This class contains references to widgets etc.
  * on the screen
  * it contains methods to update values for all nessesary
@@ -34,6 +36,7 @@ public class AppState {
     //the radio group
     private RadioGroup selectionRadio;
 
+    //the hairstyle selection spinner
     private Spinner hairSpinner;
 
     //static string array used to populate the spinner
@@ -89,10 +92,12 @@ public class AppState {
         this.fsv= fsv;
         this.face= fsv.getFace();
 
-        updateSliders(selectionRadio.getCheckedRadioButtonId());
+        updateSliders();
     }
 
-    //update face color and textviews based on slider movement
+    /**
+     * update face color and textviews based on slider movement
+     */
     public void sliderMoved(){
         int newColor= getColorFromSeekBars(); //the new color for whatever component
 
@@ -115,8 +120,10 @@ public class AppState {
         fsv.invalidate();
     }
 
-    //called when the spinner is changed
-    //changes the face's hair style based on the param style
+    /**called when the spinner is changed
+     *
+     * @param style the style to set the face's hair to
+     */
     public void spinnerSelected(String style){
         //choose which hairstyle
         if(style.equals(hairTypes[0])) face.setHairStyle(Face.OVAL);
@@ -129,8 +136,11 @@ public class AppState {
         fsv.invalidate();
     }
 
-    //called when a button is pushed
-    //takes the id of the pushed button
+    /**
+     * called when a button is pushed
+     *
+     * @param id the id of the pushed button
+     */
     public void buttonPushed(int id){
         if(id == R.id.buttonRand){ //random button
             face.randomize();
@@ -141,13 +151,16 @@ public class AppState {
             return;
         }
 
-        updateSliders(selectionRadio.getCheckedRadioButtonId());
+        updateSliders();
         fsv.invalidate();
     }
 
-    //update slider values to reflect face's colors
-    //called by control listner when radio updates
-    public void updateSliders(int radioId){
+    /**
+     * update slider values to reflect face's colors
+     * called by control listner when radio updates
+     */
+    public void updateSliders(){
+        int radioId= selectionRadio.getCheckedRadioButtonId();
         int color= 0; //the color that the sliders must update to
 
         //determine which button is selected and set color accordingly
@@ -173,14 +186,21 @@ public class AppState {
         updateLabels();
     }
 
-    //updates lables to match current sliders
+    /**
+     * updates lables to match current sliders
+     *
+     */
     private void updateLabels(){
         redLabel.setText(""+ redBar.getProgress());
         greenLabel.setText(""+ greenBar.getProgress());
         blueLabel.setText(""+ blueBar.getProgress());
     }
 
-    //gets color from current position of sliders
+    /**
+     * gets color from current position of sliders
+     *
+     * @return the color represented by the current state of the seekbars
+     */
     private int getColorFromSeekBars(){
         int r= redBar.getProgress();
         int g= greenBar.getProgress();
@@ -189,7 +209,11 @@ public class AppState {
         return Color.argb(255,r,g,b);
     }
 
-    //sets sliders to given color
+    /**
+     * sets sliders to given color
+     *
+     * @param color the color to set the seekbars to
+     */
     private void setSeekBarsToColor(int color){
         //parse color for r,g,b
         int r= Color.red(color);
@@ -201,7 +225,9 @@ public class AppState {
         blueBar.setProgress(b);
     }
 
-    //sets up the spinner by adding the relevant entries
+    /**
+     * sets up the spinner by adding the relevant entries
+     */
     private void setUpHairSpinner(){
         //create the array adapter
         ArrayAdapter<String> hairAdapter=

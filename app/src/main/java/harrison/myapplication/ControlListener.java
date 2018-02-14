@@ -9,6 +9,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
+ * Class ControlListener
+ *
  * class implements all nessesary event listeners,
  * making it a suitable object to listen to all events
  * this class's largely exist to call the correct AppState methods
@@ -56,11 +58,13 @@ public class ControlListener implements
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int id) {
-        state.updateSliders(id);
+        state.updateSliders();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        if(view == null) return; //none of that
+
         //get the text in the selected view
         String selectedText= (String)((TextView)view).getText();
         state.spinnerSelected(selectedText);
