@@ -57,6 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         hairSpinner.setOnItemSelectedListener(listener);
 
-
+        fsv.setOnTouchListener(listener);
     }
 }

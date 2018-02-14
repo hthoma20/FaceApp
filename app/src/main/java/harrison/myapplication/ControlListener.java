@@ -2,6 +2,7 @@ package harrison.myapplication;
 
 import android.support.annotation.IdRes;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RadioGroup;
@@ -22,7 +23,8 @@ public class ControlListener implements
                                 View.OnClickListener,
                                 SeekBar.OnSeekBarChangeListener,
                                 RadioGroup.OnCheckedChangeListener,
-                                AdapterView.OnItemSelectedListener
+                                AdapterView.OnItemSelectedListener,
+                                View.OnTouchListener
 {
     /**
      * External Citation:
@@ -35,6 +37,20 @@ public class ControlListener implements
      *    AdapterView.OnItemSelectedListener
      *  Solution:
      *    use OnItemSelectedListner
+     */
+
+    /**
+     * External Citation:
+     *
+     * Problem: what listener to impliment for touching the surface view
+     *  and how to use the methods
+     *
+     *  Source:
+     *    Android Studio API for View and
+     *    AdapterView.OnTouchListener and
+     *    MotionEvent
+     *  Solution:
+     *    use OnTouchListener
      */
 
 
@@ -68,6 +84,14 @@ public class ControlListener implements
         //get the text in the selected view
         String selectedText= (String)((TextView)view).getText();
         state.spinnerSelected(selectedText);
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(view.getId() == R.id.viewFace){
+            state.touched((int)motionEvent.getX(),(int)motionEvent.getY());
+        }
+        return false;
     }
 
 

@@ -48,9 +48,12 @@ public class AppState {
     private Context context;
 
     //the surface view we will need to redraw
-    //and a reference the the face to change colors, etc.
-    FaceSurfaceView fsv;
-    Face face;
+    private FaceSurfaceView fsv;
+    //list of faces on the surface view
+    //this list is shared by this and fsv
+    private ArrayList<Face> faceList;
+    //the currently selected face
+    private Face face;
 
     //which radio is selected, as defined by the static ints
     private int selectedRadio;
@@ -90,7 +93,8 @@ public class AppState {
         setUpHairSpinner();
 
         this.fsv= fsv;
-        this.face= fsv.getFace();
+        this.faceList= fsv.getFaces();
+        this.face= faceList.get(0); //choose first face on startup
 
         updateSliders();
     }
@@ -144,15 +148,40 @@ public class AppState {
     public void buttonPushed(int id){
         if(id == R.id.buttonRand){ //random button
             face.randomize();
-            //select a random hairtype
-            hairSpinner.setSelection((int)(Math.random()*3));
         }
         else { //unknown button
             return;
         }
 
-        updateSliders();
+        updateAll();
         fsv.invalidate();
+    }
+
+    /**
+     * called when the surfaceview is touched
+     * @param x the x-coord of the touch
+     * @param y the y-coord of the touch
+     */
+    public void touched(int x, int y){
+        //go see if we selected a new face
+        for(Face f : faceList){
+            if(f.clickedMe(x,y)){
+                Log.i("touched","clicked me");
+                face= f;
+                fsv.setSelectedFace(face);
+                updateAll();
+            }
+        }
+
+        fsv.invalidate();
+    }
+
+    /**
+     * update sliders and spinner
+     */
+    private void updateAll(){
+        hairSpinner.setSelection(face.getHairStyle());
+        updateSliders();
     }
 
     /**

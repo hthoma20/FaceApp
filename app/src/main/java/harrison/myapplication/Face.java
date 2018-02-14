@@ -59,6 +59,8 @@ public class Face {
         eyeColor= getRandomColor();
         hairColor= getRandomColor();
         skinColor= getRandomColor();
+
+        hairType= (int)(Math.random()*3);
     }
 
     /*
@@ -168,6 +170,30 @@ public class Face {
         c.drawCircle(x+30,y-20,20,eyePaint);
     }
 
+    /**
+     * draws border around this face
+     * @param c the canvas on which to draw
+     */
+    public void drawBounds(Canvas c){
+        Paint redPaint= new Paint();
+        redPaint.setColor(0xFFFF0000);
+        redPaint.setStyle(Paint.Style.STROKE);
+        c.drawRect(x-110,y-170,x+110,y+145,redPaint);
+    }
+
+    /**
+     * @return weather the point specified by x,y is on this face
+     */
+    public boolean clickedMe(int x, int y){
+        //find definate no's
+        if(x < this.x-100) return false;
+        if(x > this.x+100) return false;
+        if(y < this.y-135) return false;
+        if(y > this.y+135) return false;
+
+        //if it got thru all those cases, it's inside
+        return true;
+    }
 
 
     public int getSkinColor() {
@@ -181,6 +207,8 @@ public class Face {
     public int getHairColor() {
         return hairColor;
     }
+
+    public int getHairStyle(){ return hairType; }
 
     public void setSkinColor(int color){
         this.skinColor= color;

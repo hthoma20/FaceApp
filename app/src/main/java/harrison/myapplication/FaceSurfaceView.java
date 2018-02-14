@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Class FaceSurfaceView
  *
@@ -18,7 +20,9 @@ import android.view.SurfaceView;
 
 public class FaceSurfaceView extends SurfaceView {
     //the face for this surfaceview to draw
-    private Face face;
+    private ArrayList<Face> faces;
+    //the currently selected face
+    private Face selectedFace;
 
     public FaceSurfaceView(Context context) {
         super(context);
@@ -42,14 +46,30 @@ public class FaceSurfaceView extends SurfaceView {
     private void initialize(){
         setWillNotDraw(false);
 
-        this.face= new Face(500,500);
+        this.faces= new ArrayList<Face>();
+
+        for(int i=0;i<6;i++){
+            faces.add(new Face(500 + 250*i,500));
+        }
+
+        selectedFace= faces.get(0);
     }
 
     public void onDraw(Canvas c){
-        face.onDraw(c);
+        for(Face face : faces){
+            face.onDraw(c);
+        }
+
+        selectedFace.drawBounds(c);
     }
 
-    public Face getFace(){
-        return face;
+    public ArrayList<Face> getFaces(){
+        return faces;
+    }
+
+    public void setSelectedFace(Face face){
+        if(faces.contains(face)) {
+            selectedFace = face;
+        }
     }
 }
